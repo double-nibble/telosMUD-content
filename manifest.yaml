@@ -1,0 +1,6 @@
+version: v0.1.0
+content_hash: sha256:abf2207a57b009b01a76d031d1ad68920062dffb5f866192500ba7239efe55d2
+packs:
+    - reference
+created_at: "2026-07-07T20:02:48Z"
+ci_run: initial

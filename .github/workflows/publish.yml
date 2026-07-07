@@ -1,0 +1,44 @@
+# Publish a content version. On merge to main, re-validate with `telos-pull --check` and then TAG the
+# commit with `manifest.version` — that immutable git tag is the "published version" a deployment
+# pulls with `telos-pull` (TELOS_CONTENT_VERSION=<tag>). If the version was not bumped (the tag
+# already exists), this is a no-op with a note: bump `version:` in manifest.yaml (and regenerate the
+# hash with `telos-pull --emit-manifest`) to publish a new version.
+name: publish
+on:
+  push:
+    branches: [main]
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to push the tag
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+      - name: Build telos-pull from the engine repo
+        run: |
+          git clone --depth 1 https://github.com/double-nibble/telosMUD.git /tmp/engine
+          (cd /tmp/engine && go build -o /tmp/telos-pull ./cmd/telos-pull)
+      - name: Validate, then tag manifest.version
+        env:
+          TELOS_CONTENT_URL: ${{ github.workspace }}
+          TELOS_CONTENT_CACHE: /tmp/telos-content-cache
+        run: |
+          TELOS_CONTENT_VERSION="$(git rev-parse HEAD)" /tmp/telos-pull --check
+          VERSION="$(grep '^version:' manifest.yaml | awk '{print $2}')"
+          if [ -z "$VERSION" ]; then
+            echo "manifest.yaml has no version"; exit 1
+          fi
+          if git rev-parse "refs/tags/$VERSION" >/dev/null 2>&1; then
+            echo "tag $VERSION already exists — bump version: in manifest.yaml to publish a new version."
+          else
+            git config user.name  "telos-content-bot"
+            git config user.email "telos-content-bot@users.noreply.github.com"
+            git tag "$VERSION"
+            git push origin "$VERSION"
+            echo "published content version $VERSION"
+          fi

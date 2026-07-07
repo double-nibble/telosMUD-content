@@ -1,0 +1,2 @@
+# Enforce LF + treat all as text so the content_hash is reproducible across CI and dev hosts.
+* text=auto eol=lf
