@@ -19,10 +19,17 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: "1.25"
+      - uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99 # v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build telos-pull from the engine repo
+        # The engine's *.pb.go are generated (gitignored), so a fresh clone must `buf generate`
+        # before building. telos-pull pulls in internal/world (via internal/store) which needs them.
         run: |
           git clone --depth 1 https://github.com/double-nibble/telosMUD.git /tmp/engine
-          (cd /tmp/engine && go build -o /tmp/telos-pull ./cmd/telos-pull)
+          cd /tmp/engine
+          buf generate
+          go build -o /tmp/telos-pull ./cmd/telos-pull
       - name: Validate, then tag manifest.version
         env:
           TELOS_CONTENT_URL: ${{ github.workspace }}
