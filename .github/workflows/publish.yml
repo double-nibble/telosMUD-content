@@ -43,8 +43,8 @@ jobs:
           if git rev-parse "refs/tags/$VERSION" >/dev/null 2>&1; then
             echo "tag $VERSION already exists — bump version: in manifest.yaml to publish a new version."
           else
-            git config user.name  "telos-content-bot"
-            git config user.email "telos-content-bot@users.noreply.github.com"
+            # A lightweight tag records no author, so no git identity is needed; the push is
+            # authenticated by the workflow's GITHUB_TOKEN.
             git tag "$VERSION"
             git push origin "$VERSION"
             echo "published content version $VERSION"
