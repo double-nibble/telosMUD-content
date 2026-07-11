@@ -34,7 +34,6 @@ zones:
           north: overworld:room:c2_r1
           east: overworld:room:c3_r0
           west: overworld:room:c1_r0
-          south: midgaard:room:market
           enter: midgaard:room:market
       - ref: overworld:room:c3_r0
         name: The Open Plains
@@ -1246,7 +1245,6 @@ zones:
           south: overworld:room:c2_r18
           east: overworld:room:c3_r19
           west: overworld:room:c1_r19
-          north: darkwood:room:grove
           enter: darkwood:room:grove
       - ref: overworld:room:c3_r19
         name: The Open Plains
