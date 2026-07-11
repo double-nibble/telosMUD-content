@@ -6,7 +6,9 @@
 # hash mismatch — so the manifest is always kept in step.
 name: validate
 on:
-  pull_request:
+  # Branch pushes ARE the PR gate (a PR branch is pushed). Deliberately NOT `pull_request`: on that event
+  # actions/checkout lands on the detached refs/pull/N/merge commit, which telos-pull's go-git clone of the
+  # workspace cannot resolve ("object not found") — the push run validates the real branch HEAD instead.
   push:
     branches-ignore: [main] # main is validated + tagged by publish.yml
 jobs:
