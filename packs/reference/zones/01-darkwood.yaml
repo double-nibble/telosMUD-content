@@ -9,8 +9,9 @@ zones:
       - ref: darkwood:room:grove
         name: A Moonlit Grove
         long: Silver birches ring a still clearing; the air hums with quiet magic.
+        # #361: no direct grove→market shortcut. Back to the city is `exit` onto the plains, then `south`
+        # x19, then `enter`. The parity want-map for grove is {north, exit}.
         exits:
-          south: midgaard:room:market   # back across the shard boundary
           north: darkwood:room:hollow
           exit: overworld:room:c2_r19   # #361 back out onto the open plains (the forest's southern edge)
       - ref: darkwood:room:hollow

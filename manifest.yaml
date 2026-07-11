@@ -1,6 +1,6 @@
-version: v0.2.0
-content_hash: sha256:9a03c379744acdeb4f4ec11dfb2a7a995b28177a8bcd0fa99fcb3c4ac9f194af
+version: v0.3.0
+content_hash: sha256:c1d146a1c9174f268482dd5aabd050f4d264ef158519603d1b00b572f9b540bb
 packs:
     - reference
-created_at: "2026-07-11T04:25:58Z"
-ci_run: local-mirror-overworld
+created_at: "2026-07-11T05:38:22Z"
+ci_run: local-refinements
