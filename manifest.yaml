@@ -1,6 +1,6 @@
-version: v0.4.0
-content_hash: sha256:7c4f7420f490cf7f946537667d7f88c9ac8c3e10d9495e9c8922aa38be7932dc
+version: v0.5.0
+content_hash: sha256:04f9f109baa0dc7d3954facee0ef7e1679eb7aff7bc804ca5b32779878b3ea1e
 packs:
     - reference
-created_at: "2026-07-11T17:11:25Z"
-ci_run: local-refinements
+created_at: "2026-07-23T04:46:00Z"
+ci_run: round-42-sanity-exemplar
